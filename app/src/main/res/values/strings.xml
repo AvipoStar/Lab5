@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Criminal</string>
+    <string name="crime_title_hint">Введите название преступления</string>
+    <string name="crime_title_label">Преступление</string>
+    <string name="crime_details_label">Детали</string>
+    <string name="crime_solved_label">Исправлено</string>
+</resources>
