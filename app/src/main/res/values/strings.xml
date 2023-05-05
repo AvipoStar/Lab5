@@ -4,4 +4,5 @@
     <string name="crime_title_label">Преступление</string>
     <string name="crime_details_label">Детали</string>
     <string name="crime_solved_label">Исправлено</string>
+    <string name="date_picker_title">Дата преступления:</string>
 </resources>

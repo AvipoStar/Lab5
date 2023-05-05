@@ -1,8 +1,10 @@
 package com.example.criminal;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,13 +31,25 @@ public class CrimeListFragment extends Fragment
 
         return view;
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateUI();
+    }
 
     private void updateUI()
     {
         CrimeLab crimeLab = CrimeLab.get(getActivity());
         List<Crime> crimes = crimeLab.getCrimes();
-        mAdapter = new CrimeAdapter(crimes);
-        mCrimeRecyclerView.setAdapter(mAdapter);
+        if (mAdapter == null)
+        {
+            mAdapter = new CrimeAdapter(crimes);
+            mCrimeRecyclerView.setAdapter(mAdapter);
+        }
+        else
+        {
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     private class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener
@@ -43,12 +57,22 @@ public class CrimeListFragment extends Fragment
         private TextView mTitleTextView;
         private TextView mDateTextView;
         private Crime mCrime;
+        private ImageView mSolvedImageView;
+
+        @Override
+        public void onClick(View view)
+        {
+            Intent intent = MainActivity.newIntent(getActivity(),
+                    mCrime.getmId());
+            startActivity(intent);
+        }
+
         public CrimeHolder(LayoutInflater inflater, ViewGroup parent)
         {
             super(inflater.inflate(R.layout.list_item_crime, parent, false));
             mTitleTextView = (TextView) itemView.findViewById(R.id.crime_title);
             mDateTextView = (TextView) itemView.findViewById(R.id.crime_date);
-
+            mSolvedImageView = (ImageView) itemView.findViewById(R.id.crime_solved);
             itemView.setOnClickListener(this);
         }
         public void bind(Crime crime)
@@ -56,11 +80,7 @@ public class CrimeListFragment extends Fragment
             mCrime = crime;
             mTitleTextView.setText(mCrime.getmTitle());
             mDateTextView.setText(mCrime.getmDate().toString());
-        }
-
-        @Override
-        public void onClick(View view) {
-            Toast.makeText(getActivity(),mCrime.getmTitle() + " clicked!", Toast.LENGTH_SHORT).show();
+            mSolvedImageView.setVisibility(crime.ismSolved() ? View.VISIBLE : View.GONE);
         }
     }
     private class CrimeAdapter extends RecyclerView.Adapter<CrimeHolder>
