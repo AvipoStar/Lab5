@@ -5,4 +5,7 @@
     <string name="crime_details_label">Детали</string>
     <string name="crime_solved_label">Исправлено</string>
     <string name="date_picker_title">Дата преступления:</string>
-</resources>
+    <string name="new_crime">Новое преступление</string>
+    <string name="show_subtitle">Показать подзаголовок</string>
+    <string name="hide_subtitle">Спрятать подзаголовок</string>
+    <string name="subtitle_format">%1$d преступлений</string></resources>
